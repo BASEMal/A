@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطبيق الصلاة</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+        }
+        .header {
+            background-color: #6a1b9a;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        .header p {
+            margin: 5px 0 0;
+            position: absolute;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: scroll 10s linear infinite;
+        }
+        @keyframes scroll {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+        .location {
+            background-color: #ffeb3b;
+            color: #000;
+            text-align: center;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .next-azan {
+            background-color: #ffeb3b;
+            color: #000;
+            text-align: center;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .time-list {
+            background-color: #4a148c;
+            color: white;
+            padding: 10px;
+        }
+        .time-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .time-item span {
+            display: inline-block;
+        }
+        .nav-bar {
+            background-color: #6a1b9a;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+        }
+        .nav-bar span {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 id="current-time">00:22:58</h1>
+        <p id="remaining-time">متبقي على صلاة العشاء</p>
+    </div>
+    <div class="location">
+        <p>البلد: اليمن</p>
+        <p>المدينة: صنعاء</p>
+    </div>
+    <div class="next-azan">
+        <p>الأذان القادم: الظهر - PM 12:8</p>
+    </div>
+    <div class="time-list">
+        <div class="time-item">
+            <span>الفجر</span>
+            <span>AM 4:28</span>
+        </div>
+        <div class="time-item">
+            <span>الظهر</span>
+            <span>PM 12:8</span>
+        </div>
+        <div class="time-item">
+            <span>العصر</span>
+            <span>PM 3:30</span>
+        </div>
+        <div class="time-item">
+            <span>المغرب</span>
+            <span>PM 6:8</span>
+        </div>
+        <div class="time-item">
+            <span>العشاء</span>
+            <span>PM 6:47</span>
+        </div>
+    </div>
+    <div class="nav-bar">
+        <span>جميع الحقوق محفوظة للطالب:- باسم الذيابي</span>
+    </div>
+
+    <script>
+        function updateDateTime() {
+            // الحصول على الوقت الحالي
+            let now = new Date();
+
+            // تحديد وقت صلاة العشاء
+            let ishaTime = new Date();
+            ishaTime.setHours(21);
+            ishaTime.setMinutes(4);
+            ishaTime.setSeconds(0);
+
+            // حساب الوقت المتبقي لصلاة العشاء
+            let timeDiff = ishaTime - now;
+            let hours = Math.floor(timeDiff / (1000 * 60 * 60));
+            let minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+            // عرض الوقت المتبقي
+            document.getElementById('remaining-time').innerText = `متبقي على صلاة الفجر: ${hours} ساعة ${minutes} دقيقة ${seconds} ثانية`;
+
+            // عرض الوقت الحالي
+            document.getElementById('current-time').innerText = now.toTimeString().split(' ')[0];
+        }
+
+        // تحديث الوقت كل ثانية
+        setInterval(updateDateTime, 1000);
+
+        // عرض الوقت الحالي عند تحميل الصفحة
+        updateDateTime();
+    </script>
+</body>
+</html>
